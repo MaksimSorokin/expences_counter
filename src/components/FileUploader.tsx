@@ -38,9 +38,15 @@ export default function FileUploader() {
 
             const data: { fileUrl: string } = await res.json()
             
-            setImageUrl(data.fileUrl)
+            //setImageUrl(data.fileUrl)
+            const res2 = await fetch("api/xls/categories", {
+                method: "GET"
+            })
+
+            const data2 = await res2.json()
+            console.log(data2)
         } catch (error) {
-            console.error("something went wrong, check your console.")
+            console.error("something went wrong, check your console.", error)
         }
         
         e.target.type = "text"
