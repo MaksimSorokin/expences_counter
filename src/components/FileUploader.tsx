@@ -39,7 +39,7 @@ export default function FileUploader() {
             const data: { fileUrl: string } = await res.json()
             
             //setImageUrl(data.fileUrl)
-            const res2 = await fetch("api/xls/categories", {
+            const res2 = await fetch("api/xls", {
                 method: "GET"
             })
 

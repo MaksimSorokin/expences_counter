@@ -37,13 +37,12 @@ class Expence {
 const getCellValue = (row: Excel.Row, cellIndex: number) => {
     const cell = row.getCell(cellIndex);
 
-    if (typeof cell.value == 'object') {
+    if (cell.result) {
         const value = row.getCell(cellIndex)
-
         return value.result ? value.result.toString() : ''
-    }
-
-    return cell.value ? cell.value.toString() : ''
+    } else {
+        return cell.value ? cell.value.toString() : ''
+      }
 }
 
 export async function GET() {
