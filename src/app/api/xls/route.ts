@@ -1,8 +1,9 @@
 import * as path from 'path'
 import Excel from 'exceljs'
 import { NextRequest, NextResponse } from 'next/server'
+import db from '../../../lib/db'
 
-const filePath = path.resolve('public/uploads/expences.xlsx')
+const filePath = path.resolve('public/uploads/expenses.xlsx')
 
 class Expence {
     private name: string
@@ -32,6 +33,10 @@ class Expence {
             amount: this.amount
         }
     }
+
+    toArray() {
+        return [this.name, this.category, this.transaction, this.amount]
+    }
 }
 
 const getCellValue = (row: Excel.Row, cellIndex: number) => {
@@ -45,32 +50,38 @@ const getCellValue = (row: Excel.Row, cellIndex: number) => {
       }
 }
 
+const transfromDate = (value: string) => {
+    const date = new Date(value)
+
+    return date.toISOString().slice(0, 10)
+}
+
 export async function GET() {
     const workbook = new Excel.Workbook();
     const content = await workbook.xlsx.readFile(filePath);
 
     const worksheet = content.worksheets[0];
     const rowStartIndex = 2;
-    const numberOfRows = worksheet.rowCount - 3;
+    const numberOfRows = worksheet.rowCount - 2;
+    console.log(numberOfRows)
 
     const rows = worksheet.getRows(rowStartIndex, numberOfRows) ?? []
-
-    let expences: Expence[] = []
     
-    rows.forEach((row) => {
+    rows.forEach(async (row) => {
         let cell = 2
         while (cell < worksheet.columnCount) {
-            if (getCellValue(row, cell) != '') {
-                expences.push(new Expence(
+            const value = getCellValue(row, cell)
+            if (value != '') {
+                const expense = new Expence(
                     getCellValue(row, 1),
-                    getCellValue(worksheet.getRow(1), cell),
-                    +getCellValue(row, cell)
-                ))
+                    transfromDate(getCellValue(worksheet.getRow(1), cell)),
+                    +value)
+                
+                await db.query('with category_id as ( select id from categories where name=$2) insert into expenses (name, category, transaction_date, amount) SELECT $1, id, $3, $4 from category_id', expense.toArray())
             }
             cell++
         }
     })
 
-    console.log(expences)
-    return NextResponse.json(expences)
+    return NextResponse.json({status: 200})
 }

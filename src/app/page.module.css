@@ -6,3 +6,9 @@
 .container > h1 {
         padding: 40px 0;
 }
+
+.statDiv {
+  display: inline-block;
+  position: relative;
+  margin: 0 auto;
+}
