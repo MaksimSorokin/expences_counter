@@ -3,7 +3,7 @@ import Excel from 'exceljs'
 import { NextRequest, NextResponse } from 'next/server'
 import db from '../../../../lib/db'
 
-const filePath = path.resolve('public/uploads/expences.xlsx')
+const filePath = path.resolve('public/uploads/expenses.xlsx')
 
 const getCellValue = (row: Excel.Row, cellIndex: number) => {
     const cell = row.getCell(cellIndex);
@@ -17,7 +17,7 @@ export async function GET() {
 
     const worksheet = content.worksheets[0];
     const rowStartIndex = 2;
-    const numberOfRows = worksheet.rowCount - 3;
+    const numberOfRows = worksheet.rowCount - 2;
 
     const rows = worksheet.getRows(rowStartIndex, numberOfRows) ?? []
 
