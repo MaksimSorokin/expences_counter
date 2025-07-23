@@ -1,0 +1,17 @@
+.form{
+    width: 50%;
+    height: 30%;
+    background-color: rgba(0, 255, 255, 0.274);
+    input {
+        border-width: 1px;
+        text-align: center;
+    }
+    a {
+        width: 233px;
+        text-align: center;
+    }
+    a:hover {
+        cursor: default;
+        background-color: rgba(143, 141, 141, 0.562);
+    }
+}

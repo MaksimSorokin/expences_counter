@@ -1,23 +1,11 @@
-import styles from "./page.module.css"
-import StatModule from "@/components/StatModule";
-import FileUploader from "@/components/FileUploader"
+import AddForm from "@/components/AddExpenseForm";
 
 export default async function Home() {
-  return (
-    <main>
-      <div className={`${styles.container}`}>
-        <h1>File uploader</h1>
-        <form>
-          <div>
-            <h3>Thumbnail</h3>
-            <FileUploader />
-          </div>
-        </form>
-      </div>
-      <div className='pt-12 flex flex-col items-center'>
-        <label>Статистика</label>
-        <StatModule />
-      </div>
-    </main>
-  );
+    return (
+        <main>
+            <div className="flex items-center justify-center pt-12">
+                <AddForm />
+            </div>
+        </main>
+    )
 }
