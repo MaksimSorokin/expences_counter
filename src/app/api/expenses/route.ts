@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
     const res = await db.insertExpense(expense)
 
     if (res) {
-        return NextResponse.json({status: 200})
+        return NextResponse.json(res.rows[0])
     } else {
         return NextResponse.json({status: 500})
     }

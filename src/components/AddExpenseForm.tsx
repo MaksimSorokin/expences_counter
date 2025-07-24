@@ -3,6 +3,8 @@
 import { ChangeEvent, MouseEvent, useState, useEffect } from "react"
 import styles from '@/components/AddExpenseForm.module.css'
 
+const TODAY = new Date();
+
 interface Category {
     id: number,
     name: string
@@ -23,7 +25,7 @@ export default function AddForm() {
     
     const [name, setName] = useState("")
     const [category, setCategory] = useState("")
-    const [transaction, setTransaction] = useState("")
+    const [transaction, setTransaction] = useState(`${TODAY.toISOString().slice(0, 10)}`)
     const [amount, setAmount] = useState("")
 
     const Submit = async (e: MouseEvent) => {
@@ -32,7 +34,25 @@ export default function AddForm() {
             method: "POST",
             body: JSON.stringify([name, category, transaction, amount])
         })
-        console.log(res)
+        Reset()
+        const div = document.getElementById('addedDiv');
+        if (div) {
+            div.style.display = 'flex'
+        }
+        const added = await res.json()
+        const list = document.getElementById('addedList')
+        if (list) {
+            const li = document.createElement('li')
+            li.innerHTML = `${added.name} ${added.category} ${added.amount}`
+            list.append(li)
+        }
+    }
+
+    const Reset = () => {
+        setName("")
+        setCategory("")
+        setTransaction(`${TODAY.toISOString().slice(0, 10)}`)
+        setAmount("")
     }
 
     const ClickCategory = (e: React.MouseEvent<HTMLElement>) => {
@@ -41,6 +61,7 @@ export default function AddForm() {
     }
 
     const ClickCategoryInput = (e: MouseEvent) => {
+        setCategory("")
         ToggleCategoriesDiv()
     }
 
@@ -52,6 +73,7 @@ export default function AddForm() {
     }
 
     return (
+        <div className="flex flex-col items-center justify-center pt-12">
         <fieldset className={styles['form']}>
             <form action='#' method='get' className="flex flex-col items-center">
                 <label>
@@ -129,5 +151,16 @@ export default function AddForm() {
                 </button>
             </form>
         </fieldset>
+            <div 
+                id="addedDiv"
+                style={{ display: "none" }}
+                className="flex items-center flex-col mt-12">
+                        <label>
+                            Добавленные
+                        </label>
+                        <ul id="addedList" className="flex items-center flex-col">
+                        </ul>
+            </div>
+        </div>
     )
 }

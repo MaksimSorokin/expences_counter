@@ -8,7 +8,7 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-const insertExpenseQuery = 'with category_id as ( select id from categories where name=$2) insert into expenses (name, category, transaction_date, amount) SELECT $1, id, $3, $4 from category_id'
+const insertExpenseQuery = 'with category_id as ( select id from categories where name=$2) insert into expenses (name, category, transaction_date, amount) SELECT $1, id, $3, $4 from category_id returning *'
 
 module.exports = {
   query: (text, params) => pool.query(text, params),
