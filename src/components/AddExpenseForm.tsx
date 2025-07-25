@@ -13,6 +13,8 @@ interface Category {
 export default function AddForm() {
     const [categories, setCategories] = useState<Category[]>([])
 
+    const [sum, setSum] = useState(0);
+
     useEffect(() => {
         const getCategories = async () => {
             const res = await fetch("api/categories")
@@ -43,8 +45,9 @@ export default function AddForm() {
         const list = document.getElementById('addedList')
         if (list) {
             const li = document.createElement('li')
-            li.innerHTML = `${added.name} ${added.category} ${added.amount}`
+            li.innerHTML = `${added.name} ${added.amount}`
             list.append(li)
+            setSum(sum + added.amount)
         }
     }
 
@@ -85,6 +88,7 @@ export default function AddForm() {
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    autoComplete="off"
                     required
                 />
                 
@@ -99,6 +103,7 @@ export default function AddForm() {
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                         onClick={(e) => ClickCategoryInput(e)}
+                        autoComplete="off"
                         required
                     />
                     <div
@@ -127,6 +132,7 @@ export default function AddForm() {
                     id="transaction"
                     value={transaction}
                     onChange={(e) => setTransaction(e.target.value)}
+                    autoComplete="off"
                     required
                 />
 
@@ -139,6 +145,7 @@ export default function AddForm() {
                     id="amount"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
+                    autoComplete="off"
                     required
                 />
 
@@ -160,6 +167,9 @@ export default function AddForm() {
                         </label>
                         <ul id="addedList" className="flex items-center flex-col">
                         </ul>
+                        <label>
+                             Сумма: {sum}
+                        </label>
             </div>
         </div>
     )

@@ -24,18 +24,20 @@ export default function Stat() {
     }, [])
 
     return (
-        <div className='flex items-center flex-col'>
-            <h2>Список расходов по категориям</h2>
-            <ul className='flex items-center flex-col'>
-            {expenses.map(expense => (
-                <li key={expense.id}>
-                    {expense.category} - {expense.amount}
-                </li>
-            ))}
-            </ul>
-            <label>
-                {sum}
-            </label>
+        <div>    
+            <div className='flex items-center flex-col'>
+                <h2>Список расходов по категориям</h2>
+                <ul className='flex items-center flex-col'>
+                {expenses.map(expense => (
+                    <li key={expense.id}>
+                        {expense.category} - {expense.amount}
+                    </li>
+                ))}
+                </ul>
+                <label>
+                    {sum}
+                </label>
+            </div>
         </div>
     )
 }
