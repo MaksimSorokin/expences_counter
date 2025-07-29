@@ -9,8 +9,10 @@ const pool = new Pool({
 });
 
 const insertExpenseQuery = 'with category_id as ( select id from categories where name=$2) insert into expenses (name, category, transaction_date, amount) SELECT $1, id, $3, $4 from category_id returning *'
+const insertCategoryQuery = 'insert into categories (name) VALUES($1)'
 
 module.exports = {
   query: (text, params) => pool.query(text, params),
-  insertExpense: (params) => pool.query(insertExpenseQuery, params)
+  insertExpense: (params) => pool.query(insertExpenseQuery, params),
+  insertCategory: (params) => pool.query(insertCategoryQuery, params)
 };

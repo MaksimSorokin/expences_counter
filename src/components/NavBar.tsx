@@ -15,6 +15,7 @@ export default function Nav() {
             className="flex justify-between mr-10 w-100">
                 <a href="/" className="w-auto h-[100px] text-center leading-[100px]">Добавление</a>
                 <a href="/stat" className="w-auto h-[100px] text-center leading-[100px]">Статистика</a>
+                <a href="/categories" className="w-auto h-[100px] text-center leading-[100px]">Категории</a>
             </div>
         </div>
     )
