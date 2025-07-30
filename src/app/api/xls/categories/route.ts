@@ -1,7 +1,7 @@
 import * as path from 'path'
 import Excel from 'exceljs'
 import { NextRequest, NextResponse } from 'next/server'
-import db from '../../../../lib/db'
+import {query} from '../../../../lib/db'
 
 const filePath = path.resolve('public/uploads/expenses.xlsx')
 
@@ -32,7 +32,7 @@ export async function GET() {
 
     categories.forEach(async (categorie) => {
         const text = 'INSERT INTO categories (name) VALUES (\'' + categorie + '\') RETURNING *'
-        const res = await db.query(text)
+        const res = await query(text)
         console.log(res.rows[0])
     })
     console.log(categories)

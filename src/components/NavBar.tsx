@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Nav() {
     return (
@@ -13,9 +14,10 @@ export default function Nav() {
                 />
             <div
             className="flex justify-between mr-10 w-100">
-                <a href="/" className="w-auto h-[100px] text-center leading-[100px]">Добавление</a>
-                <a href="/stat" className="w-auto h-[100px] text-center leading-[100px]">Статистика</a>
-                <a href="/categories" className="w-auto h-[100px] text-center leading-[100px]">Категории</a>
+                <Link href="/" className="w-auto h-[100px] text-center leading-[100px]">Добавление</Link>
+                <Link href="/stat" className="w-auto h-[100px] text-center leading-[100px]">Статистика</Link>
+                <Link href="/expenses" className="w-auto h-[100px] text-center leading-[100px]">Расходы</Link>
+                <Link href="/categories" className="w-auto h-[100px] text-center leading-[100px]">Категории</Link>
             </div>
         </div>
     )

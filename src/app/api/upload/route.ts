@@ -20,19 +20,12 @@ export async function POST(request: NextRequest) {
 
     try {
         await stat(uploadDir)
-    } catch (e: any) {
-        if (e.code === "ENOENT") {
-            await mkdir(uploadDir, {recursive: true})
-        } else {
-            console.error(
-                "Error while trying to create directory when uploading a file\n",
-                e
-            )
-            return NextResponse.json(
-                {error: "Something went wrong."},
-                {status: 500}
-            )
-        }
+    } catch (e) {
+        console.log(e)
+        return NextResponse.json(
+            {error: "Something went wrong."},
+            {status: 500}
+        )
     }
 
     try {

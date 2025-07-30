@@ -1,15 +1,15 @@
-import db from '../../../lib/db';
+import { insertCategory, query } from '../../../lib/db';
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET() {
-  const { rows } = await db.query('SELECT * FROM categories');
+  const { rows } = await query('SELECT * FROM categories');
   return Response.json(rows)
 }
 
 export async function POST(request: NextRequest) {
   const category = await request.json()
 
-  const res = await db.insertCategory(category)
+  const res = await insertCategory(category)
 
   if (res) {
     return NextResponse.json({status: 200})

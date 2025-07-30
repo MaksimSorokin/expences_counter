@@ -1,7 +1,7 @@
 import * as path from 'path'
 import Excel from 'exceljs'
 import { NextRequest, NextResponse } from 'next/server'
-import db from '../../../lib/db'
+import { query } from '../../../lib/db'
 
 const filePath = path.resolve('public/uploads/expenses.xlsx')
 
@@ -12,8 +12,8 @@ class Expence {
     private amount: number
 
     constructor(nameFull: string, transaction: string, amount: number) {
-        let name: string = nameFull.split(' (')[0]
-        let category: string = nameFull.split('(')[1].slice(0, -1) 
+        const name: string = nameFull.split(' (')[0]
+        const category: string = nameFull.split('(')[1].slice(0, -1) 
         
         this.name = name
         this.category = category
@@ -77,7 +77,7 @@ export async function GET() {
                     transfromDate(getCellValue(worksheet.getRow(1), cell)),
                     +value)
                 
-                await db.query('with category_id as ( select id from categories where name=$2) insert into expenses (name, category, transaction_date, amount) SELECT $1, id, $3, $4 from category_id', expense.toArray())
+                await query('with category_id as ( select id from categories where name=$2) insert into expenses (name, category, transaction_date, amount) SELECT $1, id, $3, $4 from category_id', expense.toArray())
             }
             cell++
         }
