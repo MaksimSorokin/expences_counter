@@ -10,7 +10,7 @@ interface Expense {
 export default function Stat() {
     const [expenses, setExpenses] = useState<Expense[]>([])
     const [sum, setSum] = useState(0);
-    
+
     useEffect(() => {
         const getData = async () => {
             const res = await fetch("api/stat")
@@ -24,15 +24,15 @@ export default function Stat() {
     }, [])
 
     return (
-        <div>    
+        <div>
             <div className='flex items-center flex-col'>
-                <h2>Список расходов по категориям</h2>
+                <h2>Список расходов по категориям за последний месяц</h2>
                 <ul className='flex items-center flex-col'>
-                {expenses.map(expense => (
-                    <li key={expense.id}>
-                        {expense.category} - {expense.amount}
-                    </li>
-                ))}
+                    {expenses.map(expense => (
+                        <li key={expense.id}>
+                            {expense.category} - {expense.amount}
+                        </li>
+                    ))}
                 </ul>
                 <label>
                     {sum}
